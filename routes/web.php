@@ -19,10 +19,12 @@ use Inertia\Inertia; // optional; can use global helper inertia()
 Route::get('/', function () {
 //    return Inertia::render('Welcome');
     return inertia('Welcome'); // vue pages are case sensitive with vite !
-});
+})->name(('welcome'));
 
 Route::get('/badass', function () {
     return inertia('Badass', [
         'name' => 'Anya Taylor-Joy'
     ]);
-});
+})->name('badass');
+
+Route::get('/second', fn() => '<h1>Second Page !</h1>>')->name('second');
