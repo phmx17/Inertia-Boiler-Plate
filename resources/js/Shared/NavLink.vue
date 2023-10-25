@@ -1,23 +1,24 @@
 <script setup>
 import {Link} from "@inertiajs/vue3";
     const props = defineProps({
-        title: String,
-        path: String,
+        href: String,
         method: String,
         data: Object,
         as: String,
+        active: Boolean // passed as an expression
     })
 </script>
 
 <template>
     <li>
         <Link
-            :href="props.path"
+            :href="props.href"
             :method="props.method"
             :data="props.data"
             :as="as"
             class="text-blue-500 hover:underline"
-        >{{ props.title }}
+            :class="{'font-bold': active}"
+        ><slot />
         </Link>
     </li>
 </template>
