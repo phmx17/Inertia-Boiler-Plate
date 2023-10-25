@@ -18,13 +18,24 @@ use Inertia\Inertia; // optional; can use global helper inertia()
 
 Route::get('/', function () {
 //    return Inertia::render('Welcome');
-    return inertia('Welcome'); // vue pages are case sensitive with vite !
-})->name(('welcome'));
+    return inertia('Home'); // vue pages are case sensitive with vite !
+})->name(('Home')); // can't use names with <Link> component
 
-Route::get('/badass', function () {
-    return inertia('Badass', [
-        'name' => 'Anya Taylor-Joy'
+Route::get('/users', fn() => inertia('Users'));
+
+Route::get('/settings', function() {
+
+    return inertia('Settings', [
+        'title' => 'Settings',
+        'frameworks' => ['Laravel 10', 'Vue 3', 'Inertia'],
+        'time' => now()->toTimeString()
     ]);
-})->name('badass');
+});
 
-Route::get('/second', fn() => '<h1>Second Page !</h1>>')->name('second');
+Route::post('/logout', function() {
+    dd(request('name'));
+});
+
+
+
+

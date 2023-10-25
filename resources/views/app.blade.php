@@ -6,11 +6,15 @@
     @routes
     @vite(['resources/js/app.js', 'resources/css/app.css'])
     @inertiaHead
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
 </head>
 <body>
-@inertia
+<section class="px-8" >
+    @inertia
 <!-- this is what @inertia does: -->
 {{--    <div id="app" data-page="{{ json_encode($page) }}" ></div>--}}
+
+</section>
 </body>
 </html>
 

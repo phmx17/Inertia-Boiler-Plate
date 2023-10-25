@@ -3,6 +3,7 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
+import VueDevtools from 'vite-plugin-vue-devtools' // chrome extension
 
 export default defineConfig({
     plugins: [
@@ -18,7 +19,14 @@ export default defineConfig({
                 },
             },
         }),
+        VueDevtools(),
     ],
+    // Enable Vue Devtools for development
+    server: {
+        proxy: {
+            '/__open-in-editor': 'http://localhost:8098'
+        },
+    },
 });
 
 
