@@ -1,14 +1,13 @@
 <script setup>
-    import {ref} from "vue";
-    import Navigation from "../Shared/Navigation.vue";
-
+import { Link} from "@inertiajs/vue3";
+import Layout from "../Shared/Layout.vue";
 
 </script>
 
 <template>
-    <h1 class="text-4xl font-bold">Users</h1>
-    <Navigation></Navigation>
-<!--    <a :href="route('welcome')">return to welcome</a>-->
+    <Layout>
+        <h1 class="text-3xl">Users</h1>
+    </Layout>
 
 </template>
 

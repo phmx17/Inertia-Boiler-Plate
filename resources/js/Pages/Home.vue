@@ -1,12 +1,14 @@
 <script setup>
     import { Link} from "@inertiajs/vue3";
-    import Navigation from "../Shared/Navigation.vue";
+    import Layout from "../Shared/Layout.vue";
 
 </script>
 
 <template>
-    <h1 class="text-4xl font-bold">Home</h1>
-    <Navigation></Navigation>
+    <Layout>
+        <h1 class="text-3xl">Home</h1>
+    </Layout>
+
 </template>
 
 <style scoped>
