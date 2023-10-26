@@ -1,5 +1,5 @@
 import { createApp, h } from 'vue';
-import { createInertiaApp } from '@inertiajs/vue3';
+import { createInertiaApp, Link } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
 // this is from updated laravel docs since the inertia is incomplete:
@@ -16,6 +16,7 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .mixin({ methods: {route} })
             .use(plugin)
+            .component('Link', Link)
             .mount(el)
     },
 

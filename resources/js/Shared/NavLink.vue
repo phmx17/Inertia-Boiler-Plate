@@ -1,5 +1,7 @@
 <script setup>
-import {Link} from "@inertiajs/vue3";
+// not required since I did a global import of <Link> in the app.js setup()
+// import { Link } from "@inertiajs/vue3";
+
     const props = defineProps({
         href: String,
         method: String,
