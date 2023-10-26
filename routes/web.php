@@ -22,6 +22,7 @@ Route::get('/', function () {
 })->name(('Home')); // can't use names with <Link> component
 
 Route::get('/users', fn() => inertia('Users'));
+Route::get('/margin', fn() => inertia('Margin'));
 
 Route::get('/settings', function() {
 
