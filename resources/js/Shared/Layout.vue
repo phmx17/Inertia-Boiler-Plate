@@ -1,19 +1,19 @@
 <script setup>
+    import { Head } from "@inertiajs/vue3"; // set head tags dynamically
     import {computed , ref , defineProps } from "vue";
     import Navigation from "./Navigation.vue";
-
-    // const username = ref(props.auth.user.username)
-    // const currentPage = $page.value
-    // console.log('user name: ', currentPage)
-    // const props = (defineProps({ page: page}))
 
     // I don't know how to access $props in here
     // const username = computed(() => $page.props.auth.user.username)
 
-
 </script>
 
 <template>
+    <Head>
+        <title>My App</title>   <!-- setting a default for title -->
+        <meta type="description" content="Site Information" head-key="description" />   <!-- setting a default for meta -->
+    </Head>
+
     <section class="px-6 bg-gray-200">
         <header class="flex justify-between items-center flex-wrap h-12 " >
             <div class="flex items-center ">

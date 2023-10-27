@@ -1,11 +1,13 @@
 <script setup>
+    import {Head} from "@inertiajs/vue3"; // set head tags dynamically
     import Layout from "../Shared/Layout.vue"; // this will prevent page loads since layout.vue is a child component
     defineOptions({ layout: Layout}) // defineOptions() is installed separately and registered in vite plugins[]
 
 </script>
 
 <template>
-        <h1 class="text-3xl">Users</h1>
+    <Head title="Users" />
+    <h1 class="text-3xl">Users</h1>
 </template>
 
 <style scoped>

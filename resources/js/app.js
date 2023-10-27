@@ -20,6 +20,8 @@ createInertiaApp({
             .component('Link', Link)
             .mount(el)
     },
+    // concat a prefix for page title; title is specified on each vue in <title>
+    title: (title) => `My App- ${title}`
 });
 
 // progress bar

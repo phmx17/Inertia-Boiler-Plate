@@ -4,7 +4,7 @@
 </script>
 
 <template>
-    <ul class="flex space-x-2 list-inside" >
+    <ul class="flex space-x-6" >
         <NavLink href="/" :active="$page.component === 'Home'">Home</NavLink>
 <!--            <MenuLink path="/users?dick=ass" title="Users" :class="{'font-bold': $page.url.startsWith('/users') }"></MenuLink>-->
         <NavLink href="/users?dick=ass" :active="$page.component === 'Users'">Users</NavLink>
