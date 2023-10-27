@@ -1,5 +1,5 @@
 <script setup>
-    import { Head } from "@inertiajs/vue3"; // set head tags dynamically
+    import { Head } from "@inertiajs/vue3"; // set head tags dynamically; - redundant since it is imported in app.js already
     import {computed , ref , defineProps } from "vue";
     import Navigation from "./Navigation.vue";
 

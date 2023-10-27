@@ -1,5 +1,5 @@
 import { createApp, h } from 'vue';
-import { createInertiaApp, Link } from '@inertiajs/vue3';
+import { createInertiaApp, Link, Head } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
 
@@ -17,7 +17,8 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .mixin({ methods: {route} })
             .use(plugin)
-            .component('Link', Link)
+            .component('Link', Link) // auto import components
+            .component('Head', Head)
             .mount(el)
     },
     // concat a prefix for page title; title is specified on each vue in <title>

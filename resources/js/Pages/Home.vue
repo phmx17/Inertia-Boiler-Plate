@@ -9,7 +9,6 @@
 <script setup>
 // can use both script tags; use 'layout: Layout' in order to remove tags in template - kewl!
 
-    import {Head} from "@inertiajs/vue3"; // set head tags dynamically
     import Layout from "../Shared/Layout.vue"; // this will prevent page loads since layout.vue is a child component
     defineOptions({ layout: Layout}) // defineOptions() is installed separately and registered in vite plugins[]
 </script>
