@@ -4,6 +4,7 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
 import VueDevtools from 'vite-plugin-vue-devtools' // chrome extension
+import DefineOptions from 'unplugin-vue-define-options/vite' // used for better laoding of layouts
 
 export default defineConfig({
     plugins: [
@@ -20,6 +21,7 @@ export default defineConfig({
             },
         }),
         VueDevtools(),
+        DefineOptions(),
     ],
     // Enable Vue Devtools for development
     server: {

@@ -1,14 +1,11 @@
 <script setup>
-import { Link} from "@inertiajs/vue3";
-import Layout from "../Shared/Layout.vue";
+    import Layout from "../Shared/Layout.vue"; // this will prevent page loads since layout.vue is a child component
+    defineOptions({ layout: Layout}) // defineOptions() is installed separately and registered in vite plugins[]
 
 </script>
 
 <template>
-    <Layout>
         <h1 class="text-3xl">Users</h1>
-    </Layout>
-
 </template>
 
 <style scoped>
