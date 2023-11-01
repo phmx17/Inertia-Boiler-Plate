@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia; // optional; can use global helper inertia()
 
@@ -21,7 +22,12 @@ Route::get('/', function () {
     return inertia('Home'); // vue pages are case sensitive with vite !
 })->name(('Home')); // can't use names with <Link> component
 
-Route::get('/users', fn() => inertia('Users'));
+Route::get('/users', fn() => inertia('Users', [
+    'users' => User::all()->map(fn($user) => [
+        'name' => $user->name,
+        'email' => $user->email
+    ])
+]));
 Route::get('/margin', fn() => inertia('Margin'));
 
 Route::get('/settings', function() {

@@ -10,7 +10,7 @@
 </script>
 
 <template>
-    <Head title="Setings" ></Head>
+    <Head title="Settings" ></Head>
     <h1 class="text-3xl">{{ title }}</h1>
     <p class="mt-4">We will be using the following frameworks:</p>
     <ul >
