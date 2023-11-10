@@ -22,12 +22,27 @@ Route::get('/', function () {
     return inertia('Home'); // vue pages are case sensitive with vite !
 })->name(('Home')); // can't use names with <Link> component
 
-Route::get('/users', fn() => inertia('Users', [
-    'users' => User::all()->map(fn($user) => [
-        'name' => $user->name,
-        'email' => $user->email
-    ])
-]));
+Route::get('/users', function() {
+    return inertia('Users', [
+        'users' => User::paginate(10)->through(fn($user) =>[
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email
+        ])
+    ]);
+
+
+
+    // bundle up an ass array
+//    return inertia('Users', [
+//        'users' => User::all()->map(fn($user) => [
+//            'name' => $user->name,
+//            'email' => $user->email,
+//            'id' => $user->id,
+//        ])
+//    ]);
+});
+
 Route::get('/margin', fn() => inertia('Margin'));
 
 Route::get('/settings', function() {
