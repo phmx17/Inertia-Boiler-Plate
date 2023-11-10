@@ -42,7 +42,7 @@
         </div>
     </div>
     <!--    paginator  -->
-    <div class="mt-6">
+    <div class="mt-6 flex justify-center w-1/2 mx-auto">
         <Pagination :links="users.links" />
     </div>
 
