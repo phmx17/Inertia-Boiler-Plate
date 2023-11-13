@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Http\Request; // use this to get $request instance
+//use Illuminate\Support\Facades\Request; // use this to access static functions of Request class
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia; // optional; can use global helper inertia()
 
@@ -22,16 +24,22 @@ Route::get('/', function () {
     return inertia('Home'); // vue pages are case sensitive with vite !
 })->name(('Home')); // can't use names with <Link> component
 
-Route::get('/users', function() {
+Route::get('/users', function(Request $request) {
+
     return inertia('Users', [
-        'users' => User::paginate(10)->through(fn($user) =>[
+        'users' => User::query()
+        ->when($request->input('search'), function($query, $search) {
+            $query->where('name', 'like', "%{$search}%");
+        })
+        ->paginate(10)
+        ->withQueryString()
+        ->through(fn($user) =>[
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email
-        ])
+        ]),
+        'filters' => $request->only(['search'])
     ]);
-
-
 
     // bundle up an ass array
 //    return inertia('Users', [

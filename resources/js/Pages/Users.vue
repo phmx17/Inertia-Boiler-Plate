@@ -1,14 +1,31 @@
 <script setup>
     import Layout from "../Shared/Layout.vue"; // this will prevent page loads since layout.vue is a child component
-    defineOptions({ layout: Layout}) // defineOptions() is installed separately and registered in vite plugins[]
-    defineProps({ users: Object})
     import Pagination from "../Shared/Pagination.vue";
+    import { ref, watch } from "vue"
+    import { router } from '@inertiajs/vue3'
+    defineOptions({ layout: Layout}) // defineOptions() is installed separately and registered in vite plugins[]
+    const { filters } = defineProps({
+        users: Object, // used in template therefore does not require destructure
+        filters: Object // comes back from api when there is an active search; keeps search box populated
+    })
+    console.log("filters: ", filters.search)
+    let search = ref(filters.search) // no .value !!
+    watch(search, value => {
+        router.get('/users', {search: value}, {
+            preserveState: true,    // keep page from refreshing
+            replace: true   // prevent browser history from filling up for each char search
+        })
+    })
+
 
 </script>
 
 <template>
     <Head title="Users" />
-    <h1 class="text-3xl">Users</h1>
+    <div class="flex justify-between mb-6">
+        <h1 class="text-3xl">Users</h1>
+        <input type="text" placeholder="Search..." v-model="search" class="p-2 border rounded-md " />
+    </div>
     <!-- component -->
     <div class="flex flex-col overflow-x-auto">
         <div class="sm:-mx-6 lg:-mx-8">
