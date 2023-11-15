@@ -1,9 +1,9 @@
 <script setup>
-    import { Head } from "@inertiajs/vue3"; // set head tags dynamically; - redundant since it is imported in app.js already
+    import { Head } from "@inertiajs/vue3"; // set head tags dynamically; - redundant right here, since it is imported in app.js already
     import {computed , ref , defineProps } from "vue";
     import Navigation from "./Navigation.vue";
 
-    // I don't know how to access $props in here
+    // I don't know how to access global $props in here
     // const username = computed(() => $page.props.auth.user.username)
 
 </script>

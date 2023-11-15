@@ -1,14 +1,17 @@
 <script setup>
-    import Layout from "../Shared/Layout.vue"; // this will prevent page loads since layout.vue is a child component
-    import Pagination from "../Shared/Pagination.vue";
+// set up the layout incl main nav
+    import Layout from "../../Shared/Layout.vue"; // this will prevent page loads since layout.vue is a child component
+    defineOptions({ layout: Layout}) // defineOptions() is installed separately and registered in vite plugins[]
+    import Pagination from "../../Shared/Pagination.vue";
     import { ref, watch } from "vue"
     import { router } from '@inertiajs/vue3'
-    defineOptions({ layout: Layout}) // defineOptions() is installed separately and registered in vite plugins[]
-    const { filters } = defineProps({
+
+    const { filters, flash } = defineProps({
         users: Object, // used in template therefore does not require destructure
-        filters: Object // comes back from api when there is an active search; keeps search box populated
+        filters: Object, // comes back from api when there is an active search; keeps search box populated
+        flash: Object
     })
-    console.log("filters: ", filters.search)
+
     let search = ref(filters.search) // no .value !!
     watch(search, value => {
         router.get('/users', {search: value}, {
@@ -17,6 +20,9 @@
         })
     })
 
+    // flash message:
+    import { usePage } from "@inertiajs/vue3";
+    // const { flash } = usePage().props;
 
 </script>
 
@@ -26,6 +32,12 @@
         <h1 class="text-3xl">Users</h1>
         <input type="text" placeholder="Search..." v-model="search" class="p-2 border rounded-md " />
     </div>
+    <!--    success message after create new user form-->
+    <div v-if="$page.props.flash.success" class="bg-green-200 w-full  text-center py-2 rounded-md " >
+        {{ $page.props.flash.success }}
+    </div>
+
+
     <!-- component -->
     <div class="flex flex-col overflow-x-auto">
         <div class="sm:-mx-6 lg:-mx-8">
@@ -48,7 +60,6 @@
                             <td class="whitespace-nowrap px-6 py-4" :key="idx">
                                 <Link :href="`/users/${user.id}/edit`" class="font-medium text-indigo-600 hover:text-yellow-300">Edit</Link>
                             </td>
-
 
                         </tr>
 

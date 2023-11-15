@@ -26,7 +26,7 @@ Route::get('/', function () {
 
 Route::get('/users', function(Request $request) {
 
-    return inertia('Users', [
+    return inertia('Users/Index', [
         'users' => User::query()
         ->when($request->input('search'), function($query, $search) {
             $query->where('name', 'like', "%{$search}%");
@@ -49,8 +49,43 @@ Route::get('/users', function(Request $request) {
 //            'id' => $user->id,
 //        ])
 //    ]);
+})->name('users.index');    // required for return to_route() later
+
+Route::get('/users/create', function(){
+    return inertia('Users/Create');
 });
 
+Route::post('/users/create', function(Request $request ){
+    $attributes = $request->validate([
+        'name' => ['required', 'min:2', 'max:50'],
+        'email' => ['required', 'max:50', 'email'],
+        'password' => ['required', 'min:6', 'max:50'],
+    ]);
+
+    User::create($attributes);
+
+
+
+
+//    User::create(
+//        $request->validate([
+//            'name' => ['required', 'min:2', 'max:50'],
+//            'email' => ['required', 'max:50', 'email'],
+//            'password' => ['required', 'min:6', 'max:50'],
+//        ])
+//    );
+
+//    return to_route('users.index');  // must use named route
+//    return redirect('/users');
+    return redirect()
+        ->route('users.index')
+//        ->with('success', 'New User has been added successfully.'); // yet another redirect that works
+        ->with(['success' => 'Success adding new User.']);
+
+});
+
+
+// this is for layout testing
 Route::get('/margin', fn() => inertia('Margin'));
 
 Route::get('/settings', function() {
@@ -58,7 +93,7 @@ Route::get('/settings', function() {
     return inertia('Settings', [
         'title' => 'Settings',
         'frameworks' => ['Laravel 10', 'Vue 3', 'Inertia'],
-        'time' => now()->toTimeString()
+        'time' => now()->toTimeString(),
     ]);
 });
 

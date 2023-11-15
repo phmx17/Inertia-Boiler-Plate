@@ -42,4 +42,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // mutator to encrypt password; does not seem to be required anymore as of laravel 10
+//    public function setPasswordAttribute($value) {
+//        $this->attributes['password'] = bcrypt($value);
+//    }
+
 }

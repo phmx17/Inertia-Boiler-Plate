@@ -41,7 +41,11 @@ class HandleInertiaRequests extends Middleware
                 'user' => [
                     'username' => 'Amanda Seyfried'
                 ]
-            ]
+            ],
+            'flash' => [
+                'success' => fn () => $request->session()->get('success')
+            ],
         ]);
     }
+
 }
