@@ -56,16 +56,20 @@ Route::get('/users/create', function(){
 });
 
 Route::post('/users/create', function(Request $request ){
-    $attributes = $request->validate([
-        'name' => ['required', 'min:2', 'max:50'],
-        'email' => ['required', 'max:50', 'email'],
-        'password' => ['required', 'min:6', 'max:50'],
-    ]);
+    try{
+        $attributes = $request->validate([
+            'name' => ['required', 'min:2', 'max:50'],
+            'email' => ['required', 'max:50', 'email', 'unique:users'],
+            'password' => ['required', 'min:6', 'max:50'],
+        ]);
+
+    } catch(\Illuminate\Validation\ValidationException $e) {
+        return Inertia::render('Users/Create', [
+            'errors' => $e->errors(),
+        ]);
+    }
 
     User::create($attributes);
-
-
-
 
 //    User::create(
 //        $request->validate([
@@ -83,7 +87,6 @@ Route::post('/users/create', function(Request $request ){
         ->with(['success' => 'Success adding new User.']);
 
 });
-
 
 // this is for layout testing
 Route::get('/margin', fn() => inertia('Margin'));
