@@ -55,35 +55,19 @@ Route::get('/users/create', function(){
     return inertia('Users/Create');
 });
 
+// create new user
 Route::post('/users/create', function(Request $request ){
-    try{
-        $attributes = $request->validate([
-            'name' => ['required', 'min:2', 'max:50'],
-            'email' => ['required', 'max:50', 'email', 'unique:users'],
-            'password' => ['required', 'min:6', 'max:50'],
-        ]);
-
-    } catch(\Illuminate\Validation\ValidationException $e) {
-        return Inertia::render('Users/Create', [
-            'errors' => $e->errors(),
-        ]);
-    }
+    // try - catch block to send errors is not required. This is the quick and nasty version that works just fine.
+    $attributes = $request->validate([
+        'name' => ['required', 'min:2', 'max:50'],
+        'email' => ['required', 'max:50', 'email', 'unique:users'],
+        'password' => ['required', 'min:6', 'max:50'],
+    ]);
 
     User::create($attributes);
 
-//    User::create(
-//        $request->validate([
-//            'name' => ['required', 'min:2', 'max:50'],
-//            'email' => ['required', 'max:50', 'email'],
-//            'password' => ['required', 'min:6', 'max:50'],
-//        ])
-//    );
-
-//    return to_route('users.index');  // must use named route
-//    return redirect('/users');
     return redirect()
         ->route('users.index')
-//        ->with('success', 'New User has been added successfully.'); // yet another redirect that works
         ->with(['success' => 'Success adding new User.']);
 
 });

@@ -12,6 +12,7 @@
     <Head>
         <title>My App</title>   <!-- setting a default for title -->
         <meta type="description" content="Site Information" head-key="description" />   <!-- setting a default for meta -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
     </Head>
 
     <section class="px-6 bg-gray-200">

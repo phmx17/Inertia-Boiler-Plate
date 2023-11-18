@@ -5,6 +5,9 @@
     import Pagination from "../../Shared/Pagination.vue";
     import { ref, watch } from "vue"
     import { router } from '@inertiajs/vue3'
+    import { throttle, debounce } from "lodash"
+    import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+
 
     const { filters, flash } = defineProps({
         users: Object, // used in template therefore does not require destructure
@@ -13,30 +16,30 @@
     })
 
     let search = ref(filters.search) // no .value !!
-    watch(search, value => {
+    watch(search, debounce(value => {
+        console.log("triggered")
         router.get('/users', {search: value}, {
             preserveState: true,    // keep page from refreshing
             replace: true   // prevent browser history from filling up for each char search
         })
-    })
-
-    // flash message:
-    import { usePage } from "@inertiajs/vue3";
-    // const { flash } = usePage().props;
-
+    }, 500))
 </script>
 
 <template>
     <Head title="Users" />
     <div class="flex justify-between mb-6">
-        <h1 class="text-3xl">Users</h1>
+        <div class="flex items-end ">
+            <h1 class="text-3xl">Users</h1>
+            <Link href="/users/create" class="text-blue-500 ml-6 " >create new</Link>
+<!--            <Link href="/users/create" class="ml-6 " ><font-awesome-icon :icon="['fas', 'magnifying-glass']" /></Link>-->
+
+        </div>
         <input type="text" placeholder="Search..." v-model="search" class="p-2 border rounded-md " />
     </div>
     <!--    success message after create new user form-->
     <div v-if="$page.props.flash.success" class="bg-green-200 w-full  text-center py-2 rounded-md " >
         {{ $page.props.flash.success }}
     </div>
-
 
     <!-- component -->
     <div class="flex flex-col overflow-x-auto">
