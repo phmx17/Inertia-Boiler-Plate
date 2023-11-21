@@ -5,57 +5,23 @@ use Illuminate\Http\Request; // use this to get $request instance
 //use Illuminate\Support\Facades\Request; // use this to access static functions of Request class
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia; // optional; can use global helper inertia()
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use App\Http\Controllers\Auth\LoginController;
 
 // vue pages are case sensitive with vite !
 
-Route::get('/', function () {
-//    return Inertia::render('Welcome');
-    return inertia('Home'); // vue pages are case sensitive with vite !
-})->name(('Home')); // can't use names with <Link> component
 
-Route::get('/users', function(Request $request) {
+// login create
+Route::get('/login', [LoginController::class, 'create'])->name('login');
 
-    return inertia('Users/Index', [
-        'users' => User::query()
-        ->when($request->input('search'), function($query, $search) {
-            $query->where('name', 'like', "%{$search}%");
-        })
-        ->paginate(10)
-        ->withQueryString()
-        ->through(fn($user) =>[
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email
-        ]),
-        'filters' => $request->only(['search'])
-    ]);
+// login store
+Route::post('/login', [LoginController::class, 'store']);
 
-    // bundle up an ass array
-//    return inertia('Users', [
-//        'users' => User::all()->map(fn($user) => [
-//            'name' => $user->name,
-//            'email' => $user->email,
-//            'id' => $user->id,
-//        ])
-//    ]);
-})->name('users.index');    // required for return to_route() later
-
+// create user page
 Route::get('/users/create', function(){
     return inertia('Users/Create');
 });
 
-// create new user
+// create user validate
 Route::post('/users/create', function(Request $request ){
     // try - catch block to send errors is not required. This is the quick and nasty version that works just fine.
     $attributes = $request->validate([
@@ -72,21 +38,49 @@ Route::post('/users/create', function(Request $request ){
 
 });
 
+// logout
+Route::get('/logout', [LoginController::class, 'destroy'])->middleware('auth') ;
+
+// pass all these routes through auth middleware
+Route::middleware('auth')->group(function () {
+    // home
+    Route::get('/', function () {
+        return inertia('Home'); // vue pages are case sensitive with vite !
+    })->name(('Home')); // can't use names with <Link> component
+
+    Route::get('/users', function(Request $request) {
+
+        return inertia('Users/Index', [
+            'users' => User::query()
+            ->when($request->input('search'), function($query, $search) {
+                $query->where('name', 'like', "%{$search}%");
+            })
+            ->paginate(10)
+            ->withQueryString()
+            ->through(fn($user) =>[
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email
+            ]),
+            'filters' => $request->only(['search'])
+        ]);
+
+    })->name('users.index');    // required for return to_route() later
+
+    Route::get('/settings', function() {
+
+        return inertia('Settings', [
+            'title' => 'Settings',
+            'frameworks' => ['Laravel 10', 'Vue 3', 'Inertia'],
+            'time' => now()->toTimeString(),
+        ]);
+    });
+
+
+});
+
 // this is for layout testing
 Route::get('/margin', fn() => inertia('Margin'));
-
-Route::get('/settings', function() {
-
-    return inertia('Settings', [
-        'title' => 'Settings',
-        'frameworks' => ['Laravel 10', 'Vue 3', 'Inertia'],
-        'time' => now()->toTimeString(),
-    ]);
-});
-
-Route::post('/logout', function() {
-    dd(request('name'));
-});
 
 
 

@@ -1,11 +1,17 @@
 <script setup>
     import { Head } from "@inertiajs/vue3"; // set head tags dynamically; - redundant right here, since it is imported in app.js already
-    import {computed , ref , defineProps } from "vue";
     import Navigation from "./Navigation.vue";
+</script>
 
-    // I don't know how to access global $props in here
-    // const username = computed(() => $page.props.auth.user.username)
-
+<script>
+// I don't know how to access global $props in composition API, so had to do it here
+    export default {
+        computed: {
+            username() {
+                return this.$page.props.auth.user.username
+            }
+        }
+    }
 </script>
 
 <template>
@@ -19,7 +25,7 @@
         <header class="flex justify-between items-center flex-wrap h-12 " >
             <div class="flex items-center ">
                 <h1 class="font-bold text-lg">My App</h1>
-                <p class="ml-4" >Welcome back {{ $page.props.auth.user.username }}</p>
+                <p class="ml-4" >Welcome back {{ username }}</p>
             </div>
             <Navigation/>
         </header>
